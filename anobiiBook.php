@@ -1,4 +1,8 @@
 <?php
+/**
+ * @package anobiiwidget
+ * @since 0.0.1
+ */
 
 /**
  * Class used to structure the information related to a book.
@@ -20,12 +24,12 @@ class AnobiiBook
 
     /**
      * Constructor
-     * @param String $id the book id
-     * @param String $title the book title
-     * @param String $subtitle the book subtitle
-     * @param String $format the book format
-     * @param String $language the book language
-     * @param String $cover the url of the book cover
+     * @param   String  $id     the book id
+     * @param   String  $title  the book title
+     * @param   String  $subtitle   the book subtitle
+     * @param   String  $format     the book format
+     * @param   String  $language   the book language
+     * @param   String  $cover  the url of the book cover
      */
     public function __construct($id=null,
                                 $title=null,
@@ -46,7 +50,7 @@ class AnobiiBook
     /**
      * Gets the url of the book by processing the book cover (couse anobii API
      * actually does not offer a better method!)
-     * @return String
+     * @return  String
      */
     public function getUrl()
     {
@@ -68,8 +72,8 @@ class AnobiiBook
     /**
      * Function used to generate an url friendly slug for the book title.
      * Taken from http://www.symfony-project.org/jobeet/1_2/Propel/en/08
-     * @param String $text the string to slugify
-     * @return String a slugified string
+     * @param   String  $text   the string to slugify
+     * @return  String          a slugified string
      */
     protected static function slugify($text)
     {
@@ -102,8 +106,8 @@ class AnobiiBook
 
     /**
      * Processes a piece of XML and extract books informations from it
-     * @param String $xml
-     * @return AnobiiBook a book filled with the information retrieved from the
+     * @param   String  $xml The piece of XML from wich to create the book instance
+     * @return  AnobiiBook      a book filled with the information retrieved from the
      * given XML
      */
     public static function fromXML($xml)

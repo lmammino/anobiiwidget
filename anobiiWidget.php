@@ -1,4 +1,9 @@
 <?php
+/**
+ * @package anobiiwidget
+ * @since 0.0.1
+ */
+
 /*
 Plugin Name: AnobiiWidget
 Plugin URI: http://oryzone.com/
@@ -35,7 +40,10 @@ define('ANOBIIWIDGET_VERSION', '0.0.1');
 define('ANOBIIWIDGET_APIKEY', '757b1f95970d049d12d8f96929de3439');
 define('ANOBIIWIDGET_SIGNATURE', '4c150ed68347e023f1cce1295516ff28');
 
-
+/**
+ * This file holds the AnobiiBook class, internally used to manage the book
+ * objects
+ */
 require(dirname(__FILE__) . "/anobiiBook.php");
 
 
@@ -282,10 +290,14 @@ class AnobiiWidget extends WP_Widget
 
     /**
      * Gets the content of a given widget using a given set of options.
-     * It uses cache via transient to avoid sending and reprocessing the whole anobii requests each time.
-     * @param int|String $widgetNumber the number of the widget (you can use more anobiiwidget at the same time, every widget has it's own number)
-     * @param Array $options an array of options (optional, it will load the previously stored options for this widget if left blank)
-     * @return String the html content of the widget
+     * It uses cache via transient to avoid sending and reprocessing the whole
+     * anobii requests each time.
+     * @param   int|String   $widgetNumber  the number of the widget
+     * (you can use more anobiiwidget at the same time, every widget has it's
+     * own number)
+     * @param   Array    $options   an array of options (optional, it will load
+     * the previously stored options for this widget if left blank)
+     * @return  String              the html content of the widget
      */
     public static function getContent($widgetNumber, $options = null)
     {
@@ -314,9 +326,9 @@ class AnobiiWidget extends WP_Widget
 
     /**
      * Creates the html code for an array of <AnobiiBook> and a given set of options.
-     * @param Array $books an array of <AnobiiBooks>
-     * @param Array $options an array of options
-     * @return String the html generated code
+     * @param    Array  $books  an array of <AnobiiBooks>
+     * @param    Array  $options    an array of options
+     * @return   String             the html generated code
      */
     protected static function renderBooks($books, $options = array())
     {
@@ -354,8 +366,8 @@ class AnobiiWidget extends WP_Widget
     /**
      * Gets the name of the transient for a given widget (using the widget number).
      * Transient is used to cache the widget content.
-     * @param int|String $number the widget number
-     * @return String
+     * @param   int|String  $number     the widget number
+     * @return  String
      */
     protected static function getTransientName($number)
     {
@@ -366,8 +378,8 @@ class AnobiiWidget extends WP_Widget
     /**
      * Request the user shelf, processes the request and produce an array of
      * <AnobiiBook>.
-     * @param Array $options an array of options
-     * @return Array an array of <AnobiiBook>
+     * @param   Array   $options    an array of options
+     * @return  Array               an array of <AnobiiBook>
      */
     protected static function requestShelf($options)
     {
@@ -410,8 +422,8 @@ class AnobiiWidget extends WP_Widget
 
     /**
      * Make a request to retrieve the infos of a book
-     * @param String $bookId the id of the book
-     * @return AnobiiBook an <AnobiiBook> object
+     * @param   String  $bookId     the id of the book
+     * @return  AnobiiBook          an <AnobiiBook> object
      */
     protected static function requestBook($bookId)
     {
@@ -422,7 +434,7 @@ class AnobiiWidget extends WP_Widget
 
     /**
      * Gets a part of the request query that provides the authorization parameters
-     * @return String 
+     * @return  String
      */
     protected static function getApplicationAuthParams()
     {
@@ -432,9 +444,9 @@ class AnobiiWidget extends WP_Widget
 
     /**
      * Function that executes a REST request and return the response from the server
-     * @param String $url the url
-     * @param Array $params an associative array of parameters to attach to the request
-     * @return String the textual response of the server
+     * @param   String  $url    the url
+     * @param   Array   $params     an associative array of parameters to attach to the request
+     * @return  String              the textual response of the server
      */
     protected static function doRequest($url, $params = array())
     {
@@ -474,6 +486,5 @@ add_action("wp_ajax_no_priv_anobiiwidget_get_content", "anobiiwidget_ajax_get_co
 
 /* attach the function that registers the widget */
 add_action('widgets_init', "AnobiiWidget::register");
-
 
 ?>
