@@ -1,8 +1,12 @@
 # AnobiiWidget
 Contributors: [Luciano Mammino](http://oryzone.com)
+
 Tags: anobii, widget, books
+
 Requires at least: 3
+
 Tested up to: 3.1
+
 Stable tag: -
 
 A wordpress widget for your [Anobii](http://anobii.com) account

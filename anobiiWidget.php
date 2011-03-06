@@ -1,7 +1,4 @@
 <?php
-/**
- * @package Akismet
- */
 /*
 Plugin Name: AnobiiWidget
 Plugin URI: http://oryzone.com/
@@ -27,9 +24,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
-
-error_reporting(E_ALL);
-ini_set('display_errors', '1');
 
 define('ANOBIIWIDGET_VERSION', '0.0.1');
 define('ANOBIIWIDGET_PLUGIN_URL', plugin_dir_url( __FILE__ ));
