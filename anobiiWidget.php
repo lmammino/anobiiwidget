@@ -25,21 +25,34 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+/** Constants */
 define('ANOBIIWIDGET_VERSION', '0.0.1');
-define('ANOBIIWIDGET_PLUGIN_URL', plugin_dir_url( __FILE__ ));
 define('ANOBIIWIDGET_APIKEY', '757b1f95970d049d12d8f96929de3439');
 define('ANOBIIWIDGET_SIGNATURE', '4c150ed68347e023f1cce1295516ff28');
 
 
 require(dirname(__FILE__) . "/anobiiBook.php");
 
+
+/**
+ * Main widget class
+ * @author Luciano Mammino <lmammino@oryzone.com>
+ * @version 0.0.1
+ */
 class AnobiiWidget extends WP_Widget
 {
-
+    /* -- Request constants -- */
+    /** base url for requesting the shelf */
     public static $SHELF_REQUEST = 'http://api.anobii.com/shelf/getSimpleShelf';
+    /** base url for requesting infos about a book */
     public static $ELEMENT_REQUEST = 'http://api.anobii.com/item/getInfo';
+
+    /* -- Options constants -- */
+    /** number of elements available to show */
     public static $NUM_ITEMS_ARRAY = array(1,2,3,4,5);
+    /** default number of elements to show */
     public static $NUM_ITEMS_DEFAULT = 5;
+    /** reading progression options */
     public static $PROGRESS_ARRAY = array(
             "1" => "Finished",
             "2" => "Not Started",
@@ -48,37 +61,43 @@ class AnobiiWidget extends WP_Widget
             "5" => "Reference",
             "6" => "Abandoned"
     );
+    /** default selected progression elements */
     public static $PROGRESS_DEFAULTS = array(1,3);
+    /** default options for using javascript */
     public static $USE_JAVASCRIPT_DEFAULT = true;
+    /** cache durations options */
     public static $CACHE_DURATIONS = array(
             "86400" => "One day",
             "259200" => "3 days",
             "604800" => "A week",
             "2592000" => "A month"
     );
+    /** default cache duration */
     public static $CACHE_DURATION_DEFAULT = "86400";
-
+    /** show image options */
     public static $SHOW_IMAGES_OPTIONS = array(
             "0" => "Always",
             "1" => "Only on the first element",
             "2" => "Never"
     );
+    /** default show image option */
     public static $SHOW_IMAGES_DEFAULT = 1;
+    /** default value for add profile link option */
     public static $ADD_PROFILE_LINK_DEFAULT = true;
 
-    
+
+    /**
+     * Static function to register the widget
+     */
     public static function register()
     {
         register_widget("AnobiiWidget");
     }
 
 
-    public static function getApplicationAuthParams()
-    {
-        return 'api_key='.ANOBIIWIDGET_APIKEY.'&api_sig='.ANOBIIWIDGET_SIGNATURE;
-    }
-
-    
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         parent::__construct('anobiiWidget', 'Anobii', array(
@@ -245,6 +264,13 @@ class AnobiiWidget extends WP_Widget
     }
 
 
+    /**
+     * Gets the content of a given widget using a given set of options.
+     * It uses cache via transient to avoid sending and reprocessing the whole anobii requests each time.
+     * @param int|String $widgetNumber the number of the widget (you can use more anobiiwidget at the same time, every widget has it's own number)
+     * @param Array $options an array of options (optional, it will load the previously stored options for this widget if left blank)
+     * @return String the html content of the widget
+     */
     public static function getContent($widgetNumber, $options = null)
     {
         if($options === null)
@@ -269,6 +295,13 @@ class AnobiiWidget extends WP_Widget
         return $content;
     }
 
+
+    /**
+     * Creates the html code for an array of <AnobiiBook> and a given set of options.
+     * @param Array $books an array of <AnobiiBooks>
+     * @param Array $options an array of options
+     * @return String the html generated code
+     */
     protected static function renderBooks($books, $options = array())
     {
         if(empty($books))
@@ -302,14 +335,24 @@ class AnobiiWidget extends WP_Widget
     }
 
 
-
-
+    /**
+     * Gets the name of the transient for a given widget (using the widget number).
+     * Transient is used to cache the widget content.
+     * @param int|String $number the widget number
+     * @return String
+     */
     protected static function getTransientName($number)
     {
         return 'anobiiwidget-' . $number. "-cached-html";
     }
 
 
+    /**
+     * Request the user shelf, processes the request and produce an array of
+     * <AnobiiBook>.
+     * @param Array $options an array of options
+     * @return Array an array of <AnobiiBook>
+     */
     protected static function requestShelf($options)
     {
         $books = array();
@@ -349,13 +392,34 @@ class AnobiiWidget extends WP_Widget
     }
 
 
+    /**
+     * Make a request to retrieve the infos of a book
+     * @param String $bookId the id of the book
+     * @return AnobiiBook an <AnobiiBook> object
+     */
     protected static function requestBook($bookId)
     {
         $xml= self::doRequest(self::$ELEMENT_REQUEST, array( "item_id" => $bookId));
         return AnobiiBook::fromXML($xml);
     }
-    
 
+
+    /**
+     * Gets a part of the request query that provides the authorization parameters
+     * @return String 
+     */
+    protected static function getApplicationAuthParams()
+    {
+        return 'api_key='.ANOBIIWIDGET_APIKEY.'&api_sig='.ANOBIIWIDGET_SIGNATURE;
+    }
+
+
+    /**
+     * Function that executes a REST request and return the response from the server
+     * @param String $url the url
+     * @param Array $params an associative array of parameters to attach to the request
+     * @return String the textual response of the server
+     */
     protected static function doRequest($url, $params = array())
     {
         $fullUrl = $url . "?" . self::getApplicationAuthParams();
@@ -374,6 +438,10 @@ class AnobiiWidget extends WP_Widget
 
 }
 
+
+/**
+ * Ajax handling function to retrieve the widget content
+ */
 function anobiiwidget_ajax_get_content()
 {
     if(isset($_POST['widget_number']))
@@ -383,11 +451,11 @@ function anobiiwidget_ajax_get_content()
     }
 }
 
+/* attach the ajax handler function */
 add_action("wp_ajax_anobiiwidget_get_content", "anobiiwidget_ajax_get_content");
 add_action("wp_ajax_no_priv_anobiiwidget_get_content", "anobiiwidget_ajax_get_content");
 
-
-
+/* attach the function that registers the widget */
 add_action('widgets_init', "AnobiiWidget::register");
 
 ?>

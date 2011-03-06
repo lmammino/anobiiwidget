@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Class used to structure the information related to a book.
+ * Part of the anobiWidget wordpress plugin.
+ * @author Luciano Mammino <lmammino@oryzone.com>
+ */
 class AnobiiBook
 {
     public $id;
@@ -12,7 +17,22 @@ class AnobiiBook
     public $startDate;
     public $endDate;
 
-    public function __construct($id=null, $title=null, $subtitle=null, $format=null, $language=null, $cover=null)
+
+    /**
+     * Constructor
+     * @param String $id the book id
+     * @param String $title the book title
+     * @param String $subtitle the book subtitle
+     * @param String $format the book format
+     * @param String $language the book language
+     * @param String $cover the url of the book cover
+     */
+    public function __construct($id=null,
+                                $title=null,
+                                $subtitle=null,
+                                $format=null,
+                                $language=null,
+                                $cover=null)
     {
         $this->id = $id;
         $this->title = $title;
@@ -22,6 +42,12 @@ class AnobiiBook
         $this->cover = $cover;
     }
 
+
+    /**
+     * Gets the url of the book by processing the book cover (couse anobii API
+     * actually does not offer a better method!)
+     * @return String
+     */
     public function getUrl()
     {
           $var  = parse_url($this->cover, PHP_URL_QUERY);
@@ -38,63 +64,14 @@ class AnobiiBook
         return "http://www.anobii.com/books/". self::slugify($this->title) . "/" . $arr['item_id'] . "/";
     }
 
-    public function the_id()
-    {
-        echo $this->id;
-    }
 
-    public function the_title()
-    {
-        echo $this->title;
-    }
-
-    public function the_subtitle()
-    {
-        echo $this->subtitle;
-    }
-
-    public function the_format()
-    {
-        echo $this->format;
-    }
-
-    public function the_language()
-    {
-        echo $this->language;
-    }
-
-    public function the_cover()
-    {
-        echo $this->cover;
-    }
-
-    public function the_progress()
-    {
-        echo $this->progress;
-    }
-
-    public function the_startDate($format = null)
-    {
-        if($format !== null)
-            echo date($format, $this->startDate);
-        else
-            echo $this->startDate;
-    }
-
-    public function the_endDate($format = null)
-    {
-        if($format !== null)
-            echo date($format, $this->endDate);
-        else
-            echo $this->endDate;
-    }
-
-    public function the_url()
-    {
-        echo $this->getUrl();
-    }
-
-    public static function slugify($text)
+    /**
+     * Function used to generate an url friendly slug for the book title.
+     * Taken from http://www.symfony-project.org/jobeet/1_2/Propel/en/08
+     * @param String $text the string to slugify
+     * @return String a slugified string
+     */
+    protected static function slugify($text)
     {
       // replace non letter or digits by -
       $text = preg_replace('~[^\\pL\d]+~u', '-', $text);
@@ -122,6 +99,13 @@ class AnobiiBook
       return $text;
     }
 
+
+    /**
+     * Processes a piece of XML and extract books informations from it
+     * @param String $xml
+     * @return AnobiiBook a book filled with the information retrieved from the
+     * given XML
+     */
     public static function fromXML($xml)
     {
         $book = new AnobiiBook();
