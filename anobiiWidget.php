@@ -349,11 +349,11 @@ class AnobiiWidget extends WP_Widget
             $html .= '<li'. ( ($first === true)? ' class="first"' : '') . '><div class="anobiiwidget-book">';
             if( ($first && $options['show_images'] == 1) || $options['show_images'] == 0 )
             {
-                $html .= '<div class="anobiiwidget-bookcover"><a  href="'. $book->getUrl() .'"><img src="'. $book->cover .'" alt="'. $book->title .'" /></a></div>';
+                $html .= '<div class="anobiiwidget-bookcover"><a title="'. $book->title .'" href="'. $book->getUrl() .'"><img src="'. $book->cover .'" alt="'. $book->title .'" /></a></div>';
                 $first = false;
             }
             
-            $html .= '<div class="anobiiwidget-title"><a href="' . $book->getUrl() . '">'. $book->title .'</a></div>';
+            $html .= '<div class="anobiiwidget-title"><a title="'. $book->title .'" href="' . $book->getUrl() . '">'. $book->title .'</a></div>';
             $html .= '</div></li>';
         }
 
