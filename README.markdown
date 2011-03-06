@@ -60,6 +60,7 @@ Steps:
   3. Go in your widget panel and place the anobii widget wherever you want
   4. Configure the widget
   5. Well done!
+  6. (Optional) Stylize your widget with some CSS. You can find inspiration in the `sampleStyle.css` file.
 
 ![Available options](http://img850.imageshack.us/img850/3268/schermata20110306a11122.png "Available options")
 
