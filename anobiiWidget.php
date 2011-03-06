@@ -64,6 +64,14 @@ class AnobiiWidget extends WP_Widget
     );
     public static $CACHE_DURATION_DEFAULT = "86400";
 
+    public static $SHOW_IMAGES_OPTIONS = array(
+            "0" => "Always",
+            "1" => "Only on the first element",
+            "2" => "Never"
+    );
+    public static $SHOW_IMAGES_DEFAULT = 1;
+    public static $ADD_PROFILE_LINK_DEFAULT = true;
+
     
     public static function register()
     {
@@ -90,6 +98,10 @@ class AnobiiWidget extends WP_Widget
     {
         extract( $args );
         $title = apply_filters('widget_title', $instance['title']);
+        if(isset($instance['add_profile_link']) && $instance['add_profile_link'] == true)
+        {
+            $title = '<a href="http://www.anobii.com/'.$instance['user'].'/">'.$title.'</a>';
+        }
         ?>
               <?php echo $before_widget; ?>
                   <?php if ( $title )
@@ -125,8 +137,11 @@ class AnobiiWidget extends WP_Widget
         $instance = $old_instance;
 	$instance['title'] = strip_tags($new_instance['title']);
         $instance['user'] = strip_tags($new_instance['user']);
+        $instance['add_profile_link'] = (isset($new_instance['add_profile_link']))? (boolean)($new_instance['add_profile_link']) : false;
         $instance['num_items'] = in_array($new_instance['num_items'], self::$NUM_ITEMS_ARRAY) ?
                                  $new_instance['num_items'] : self::$NUM_ITEMS_DEFAULT;
+        $instance['show_images'] = in_array($new_instance['show_images'], array_keys(self::$SHOW_IMAGES_OPTIONS)) ?
+                                 $new_instance['show_images'] : self::$SHOW_IMAGES_DEFAULT;
         foreach(self::$PROGRESS_ARRAY as $progressId => $progressName)
         {
             if (isset($new_instance['progress-'.$progressId]))
@@ -153,7 +168,6 @@ class AnobiiWidget extends WP_Widget
         $title = esc_attr($instance['title']);
         $user = esc_attr($instance['user']);
         $num_items = esc_attr($instance['num_items']);
-        echo self::getTransientName($this->number);
         ?>
         <p>
           <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?></label>
@@ -162,6 +176,16 @@ class AnobiiWidget extends WP_Widget
         <p>
           <label for="<?php echo $this->get_field_id('user'); ?>"><?php _e('Username:'); ?></label>
           <input class="widefat" id="<?php echo $this->get_field_id('user'); ?>" name="<?php echo $this->get_field_name('user'); ?>" type="text" value="<?php echo $user; ?>" />
+        </p>
+        <p>
+          <input id="<?php echo $this->get_field_id('add_profile_link'); ?>"
+                 name="<?php echo $this->get_field_name('add_profile_link'); ?>"
+                 type="checkbox"
+                 <?php if( (isset($instance['add_profile_link']) && $instance['add_profile_link'] == true)  ||
+                             (!isset($instance['add_profile_link']) && self::$ADD_PROFILE_LINK_DEFAULT) ): ?>
+                            checked="checked"
+                 <?php endif; ?> />
+          <label for="<?php echo $this->get_field_id('add_profile_link'); ?>"><?php _e('Add profile link'); ?></label>
         </p>
         <p>
           <label for="<?php echo $this->get_field_id('num_items'); ?>"><?php _e('Items:'); ?></label>
@@ -177,13 +201,26 @@ class AnobiiWidget extends WP_Widget
           </select>
         </p>
         <p>
+           <label for="<?php echo $this->get_field_id('show_images'); ?>"><?php _e('Show images:'); ?></label>
+          <select class="widefat" id="<?php echo $this->get_field_id('show_images'); ?>" name="<?php echo $this->get_field_name('show_images'); ?>">
+              <?php
+              $current = isset($instance['show_images'])? $instance['show_images'] : self::$SHOW_IMAGES_DEFAULT;
+              foreach(self::$SHOW_IMAGES_OPTIONS as $id => $name):
+              ?>
+              <option value="<?php echo $id ?>" <?php if($id==$current): ?>selected="selected"<?php endif; ?>>
+                <?php echo $name ?>
+              </option>
+              <?php endforeach; ?>
+          </select>
+        </p>
+        <p>
             <input type="checkbox" id="<?php echo $this->get_field_id('useJavascript'); ?>"
                        name="<?php echo $this->get_field_name('useJavascript'); ?>"
                        <?php if( (isset($instance['useJavascript']) && $instance['useJavascript'] == true)  ||
                              (!isset($instance['useJavascript']) && self::$USE_JAVASCRIPT_DEFAULT) ): ?>
                             checked="checked"
                        <?php endif; ?> />
-            <label for="<?php echo $this->get_field_id('useJavascript'); ?>"><?php _e("Use Javascript") ?></label>
+            <label for="<?php echo $this->get_field_id('useJavascript'); ?>"><?php _e("Use Javascript (Highly recommended)") ?></label>
         </p>
             <label for="<?php echo $this->get_field_id('progressFieldSet'); ?>"><?php _e("Book types:") ?></label>
             <fieldset class="widefat" id="<?php echo $this->get_field_id('progressFieldSet'); ?>">
@@ -197,7 +234,7 @@ class AnobiiWidget extends WP_Widget
                 <label for="<?php echo $this->get_field_id('progress-'.$progressId); ?>"><?php _e($progressName) ?></label><br/>
             <?php endforeach; ?>
             </fieldset>
-        <p>
+        <p style="margin-top: 20px">
            <label for="<?php echo $this->get_field_id('cache_duration'); ?>"><?php _e('Cache duration:'); ?></label>
           <select class="widefat" id="<?php echo $this->get_field_id('cache_duration'); ?>" name="<?php echo $this->get_field_name('cache_duration'); ?>">
               <?php
@@ -255,7 +292,7 @@ class AnobiiWidget extends WP_Widget
         foreach($books as $book)
         {
             $html .= '<li><div class="anobiiwidget-book">';
-            if($first)
+            if( ($first && $options['show_images'] == 1) || $options['show_images'] == 0 )
             {
                 $html .= '<div class="anobiiwidget-bookcover"><a  href="'. $book->getUrl() .'"><img src="'. $book->cover .'" alt="'. $book->title .'" /></a></div>';
                 $first = false;
