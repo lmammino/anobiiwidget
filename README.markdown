@@ -13,11 +13,23 @@ A wordpress widget for your [Anobii](http://anobii.com) account
 
 ## AnobiiWidget for Wordpress
 
+[aNobii](http://www.anobii.com) is a social networking service for book lovers. It was set up in 2006 by a private company owned by Greg Sung and based in Hong Kong.
+The service allows individuals to catalogue their books and rate, review and discuss them with other readers. The service is available via the aNobii website and iPhone and Android Apps. The Apps allow individuals to barcode scan books and read both community and expert reviews.
+
 ![Widget Screenshoot](http://img593.imageshack.us/img593/3451/schermata20110306a03343.png "Widget Screenshoot")
 
-Just a Wordpress plugin that adds a widget to display your books from your [Anobii](http://www.anobii.com) account.
+This is a Wordpress plugin that adds a widget to display your books from your [Anobii](http://www.anobii.com) account.
 Currently tested only with Wordpress 3.0 and 3.1. It is still in beta, so don't hesitate to commit bugs or suggest improvements.
 Current version: 0.0.1
+
+## Features
+
+  * Add a link to your profile around the widget title
+  * Select how many books to show (from 1 to 5)
+  * Select wheter to show book covers (always, never, only on the first book)
+  * Uses AJAX to avoid slowing down the whole website
+  * Choice books with particoular status ( Finished, Not Started, Reading, Unfinished, Reference, Abandoned)
+  * Configurable cache (via transient)
 
 ## License
 
@@ -48,6 +60,8 @@ Steps:
   3. Go in your widget panel and place the anobii widget wherever you want
   4. Configure the widget
   5. Well done!
+
+![Available options](http://img850.imageshack.us/img850/3268/schermata20110306a11122.png "Available options")
 
 
 ### Notes
