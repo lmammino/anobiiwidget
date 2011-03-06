@@ -17,7 +17,7 @@ This is a Wordpress plugin that adds a widget to display your books from your [A
 Currently tested only with Wordpress 3.0 and 3.1. It is still in beta, so don't hesitate to commit bugs or suggest improvements.
 Current version: 0.0.1
 
-= Features =
+<h2>Features</h2>
 
   * Add a link to your profile around the widget title
   * Select how many books to show (from 1 to 5)
@@ -27,13 +27,13 @@ Current version: 0.0.1
   * Configurable cache (via transient)
   * Multilanguage (Currently available in English and Italian)
 
-= NOTICE =
+<h2>NOTICE</h2>
 
 I'm looking for translators. If you're interested please [contact me](mailto:lmammino@oryzone.com) or just fork the repo, add the translations and submit a pull request.
 
 Thankyou guys!
 
-= Notes =
+<h2>Notes</h2>
 Proudly sponsored by [ORYZONE](http://oryzone.com)
 
 
@@ -45,11 +45,11 @@ Proudly sponsored by [ORYZONE](http://oryzone.com)
 
 == Installation ==
 
-=Requirements=
+<h2>Requirements</h2>
 
   * PHP - cURL enabled
 
-=Steps=
+<h2>Steps</h2>
 
   1. Copy the files `anobiiBook.php` and `anobiiWidget.php` to your `wp-content/plugins/` directory (you can put them in a subfolder if you prefer)
   2. Go to your control panel and activate the plugin
