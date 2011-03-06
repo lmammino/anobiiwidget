@@ -33,11 +33,14 @@ I'm looking for translators. If you're interested please [contact me](mailto:lma
 
 Thankyou guys!
 
+= Notes =
+Proudly sponsored by [ORYZONE](http://oryzone.com)
+
 
 == Screenshots ==
 
-![Widget Screenshoot](http://img593.imageshack.us/img593/3451/schermata20110306a03343.png "Widget Screenshoot")
-![Available options](http://img850.imageshack.us/img850/3268/schermata20110306a11122.png "Available options")
+1. **The widget** - A demonstration of what the widget looks like with a simple CSS style.
+2. **Available options** - All the options available for the plugin configuration
 
 
 == Installation ==
@@ -62,7 +65,6 @@ Thankyou guys!
   * First Release
 
 
-
 == Frequently Asked Questions ==
 
 = I love this plugin! How can I show the developer how much I appreciate his work? =
@@ -70,7 +72,3 @@ Simply keep using the plugin and if you find some bug or if you want to suggest 
 
 = I'd like to contribute to the development, what I can do? =
 You can access the code on [github](https://github.com/lmammino/anobiiwidget), [fork the repository](https://github.com/lmammino/anobiiwidget#fork_box) and of course you can submit a pull request.
-
-
-== Notes ==
-Proudly sponsored by [ORYZONE](http://oryzone.com)
