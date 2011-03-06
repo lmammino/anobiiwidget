@@ -25,6 +25,11 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+
+/** Loads the translations */
+load_plugin_textdomain('anobiiwidget', false, dirname( plugin_basename(__FILE__) ) . '/languages');
+
+
 /** Constants */
 define('ANOBIIWIDGET_VERSION', '0.0.1');
 define('ANOBIIWIDGET_APIKEY', '757b1f95970d049d12d8f96929de3439');
@@ -54,12 +59,7 @@ class AnobiiWidget extends WP_Widget
     public static $NUM_ITEMS_DEFAULT = 5;
     /** reading progression options */
     public static $PROGRESS_ARRAY = array(
-            "1" => "Finished",
-            "2" => "Not Started",
-            "3" => "Reading",
-            "4" => "Unfinished",
-            "5" => "Reference",
-            "6" => "Abandoned"
+            /* populated at runtime */
     );
     /** default selected progression elements */
     public static $PROGRESS_DEFAULTS = array(1,3);
@@ -67,18 +67,13 @@ class AnobiiWidget extends WP_Widget
     public static $USE_JAVASCRIPT_DEFAULT = true;
     /** cache durations options */
     public static $CACHE_DURATIONS = array(
-            "86400" => "One day",
-            "259200" => "3 days",
-            "604800" => "A week",
-            "2592000" => "A month"
+            /* populated at runtime */
     );
     /** default cache duration */
     public static $CACHE_DURATION_DEFAULT = "86400";
     /** show image options */
     public static $SHOW_IMAGES_OPTIONS = array(
-            "0" => "Always",
-            "1" => "Only on the first element",
-            "2" => "Never"
+        /* populated at runtime */
     );
     /** default show image option */
     public static $SHOW_IMAGES_DEFAULT = 1;
@@ -100,9 +95,30 @@ class AnobiiWidget extends WP_Widget
      */
     public function __construct()
     {
+        /* populates option arrays that need translations */
+        self::$PROGRESS_ARRAY = array(
+            "1" => __("Finished",'anobiiwidget'),
+            "2" => __("Not Started",'anobiiwidget'),
+            "3" => __("Reading",'anobiiwidget'),
+            "4" => __("Unfinished",'anobiiwidget'),
+            "5" => __("Reference",'anobiiwidget'),
+            "6" => __("Abandoned",'anobiiwidget')
+        );
+        self::$CACHE_DURATIONS = array(
+            "86400" => __("One day",'anobiiwidget'),
+            "259200" => __("3 days",'anobiiwidget'),
+            "604800" => __("A week",'anobiiwidget'),
+            "2592000" => __("A month",'anobiiwidget')
+        );
+        self::$SHOW_IMAGES_OPTIONS = array(
+            "0" => __("Always",'anobiiwidget'),
+            "1" => __("Only on the first element",'anobiiwidget'),
+            "2" => __("Never",'anobiiwidget')
+        );
+
         parent::__construct('anobiiWidget', 'Anobii', array(
                 'classname' => 'anobiiWidget',
-                'description' => 'Shows what you\'re reading on Anobii.com' ));
+                'description' => __("Shows your books on Anobii.com", 'anobiiwidget')));
     }
 
 
@@ -183,11 +199,11 @@ class AnobiiWidget extends WP_Widget
         $num_items = esc_attr($instance['num_items']);
         ?>
         <p>
-          <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?></label>
+          <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:','anobiiwidget'); ?></label>
           <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" />
         </p>
         <p>
-          <label for="<?php echo $this->get_field_id('user'); ?>"><?php _e('Username:'); ?></label>
+          <label for="<?php echo $this->get_field_id('user'); ?>"><?php _e('Username:','anobiiwidget'); ?></label>
           <input class="widefat" id="<?php echo $this->get_field_id('user'); ?>" name="<?php echo $this->get_field_name('user'); ?>" type="text" value="<?php echo $user; ?>" />
         </p>
         <p>
@@ -198,10 +214,10 @@ class AnobiiWidget extends WP_Widget
                              (!isset($instance['add_profile_link']) && self::$ADD_PROFILE_LINK_DEFAULT) ): ?>
                             checked="checked"
                  <?php endif; ?> />
-          <label for="<?php echo $this->get_field_id('add_profile_link'); ?>"><?php _e('Add profile link'); ?></label>
+          <label for="<?php echo $this->get_field_id('add_profile_link'); ?>"><?php _e('Add profile link','anobiiwidget'); ?></label>
         </p>
         <p>
-          <label for="<?php echo $this->get_field_id('num_items'); ?>"><?php _e('Items:'); ?></label>
+          <label for="<?php echo $this->get_field_id('num_items'); ?>"><?php _e('Items:','anobiiwidget'); ?></label>
           <select class="widefat" id="<?php echo $this->get_field_id('num_items'); ?>" name="<?php echo $this->get_field_name('num_items'); ?>">
               <?php
               $current = isset($instance['num_items'])? $instance['num_items'] : self::$NUM_ITEMS_DEFAULT;
@@ -214,7 +230,7 @@ class AnobiiWidget extends WP_Widget
           </select>
         </p>
         <p>
-           <label for="<?php echo $this->get_field_id('show_images'); ?>"><?php _e('Show images:'); ?></label>
+           <label for="<?php echo $this->get_field_id('show_images'); ?>"><?php _e('Show images:','anobiiwidget'); ?></label>
           <select class="widefat" id="<?php echo $this->get_field_id('show_images'); ?>" name="<?php echo $this->get_field_name('show_images'); ?>">
               <?php
               $current = isset($instance['show_images'])? $instance['show_images'] : self::$SHOW_IMAGES_DEFAULT;
@@ -233,9 +249,9 @@ class AnobiiWidget extends WP_Widget
                              (!isset($instance['useJavascript']) && self::$USE_JAVASCRIPT_DEFAULT) ): ?>
                             checked="checked"
                        <?php endif; ?> />
-            <label for="<?php echo $this->get_field_id('useJavascript'); ?>"><?php _e("Use Javascript (recommended)") ?></label>
+            <label for="<?php echo $this->get_field_id('useJavascript'); ?>"><?php _e("Use Javascript (recommended)",'anobiiwidget') ?></label>
         </p>
-            <label for="<?php echo $this->get_field_id('progressFieldSet'); ?>"><?php _e("Book types:") ?></label>
+            <label for="<?php echo $this->get_field_id('progressFieldSet'); ?>"><?php _e("Book types:",'anobiiwidget') ?></label>
             <fieldset class="widefat" id="<?php echo $this->get_field_id('progressFieldSet'); ?>">
             <?php foreach(self::$PROGRESS_ARRAY as $progressId => $progressName): ?>
                 <input type="checkbox" id="<?php echo $this->get_field_id('progress-'.$progressId); ?>"
@@ -244,11 +260,11 @@ class AnobiiWidget extends WP_Widget
                              (!isset($instance['progress-'.$progressId]) && in_array($progressId, self::$PROGRESS_DEFAULTS)) ): ?>
                             checked="checked"
                        <?php endif; ?> />
-                <label for="<?php echo $this->get_field_id('progress-'.$progressId); ?>"><?php _e($progressName) ?></label><br/>
+                <label for="<?php echo $this->get_field_id('progress-'.$progressId); ?>"><?php echo $progressName ?></label><br/>
             <?php endforeach; ?>
             </fieldset>
         <p style="margin-top: 20px">
-           <label for="<?php echo $this->get_field_id('cache_duration'); ?>"><?php _e('Cache duration:'); ?></label>
+           <label for="<?php echo $this->get_field_id('cache_duration'); ?>"><?php _e('Cache duration:','anobiiwidget'); ?></label>
           <select class="widefat" id="<?php echo $this->get_field_id('cache_duration'); ?>" name="<?php echo $this->get_field_name('cache_duration'); ?>">
               <?php
               $current = isset($instance['cache_duration'])? $instance['cache_duration'] : self::$CACHE_DURATION_DEFAULT;
@@ -307,7 +323,7 @@ class AnobiiWidget extends WP_Widget
         if(empty($books))
         {
             $html = '<div class="anobiiwidget-nobooks">';
-            $html .= __("There are no books to show");
+            $html .= __("There are no books to show", "anobiiwidget");
             $html .= '</div>';
             return $html;
         }
@@ -451,11 +467,13 @@ function anobiiwidget_ajax_get_content()
     }
 }
 
+
 /* attach the ajax handler function */
 add_action("wp_ajax_anobiiwidget_get_content", "anobiiwidget_ajax_get_content");
 add_action("wp_ajax_no_priv_anobiiwidget_get_content", "anobiiwidget_ajax_get_content");
 
 /* attach the function that registers the widget */
 add_action('widgets_init', "AnobiiWidget::register");
+
 
 ?>

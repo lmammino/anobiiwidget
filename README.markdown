@@ -30,6 +30,13 @@ Current version: 0.0.1
   * Uses AJAX to avoid slowing down the whole website
   * Choice books with particoular status ( Finished, Not Started, Reading, Unfinished, Reference, Abandoned)
   * Configurable cache (via transient)
+  * Multilanguage (Currently available in English and Italian)
+
+## NOTICE
+
+I'm looking for translators. If you're interested please [contact me](mailto:loige@hotmail.com) or just fork the repo, add the translations and submit a pull request.
+
+Thankyou guys!
 
 ## License
 
