@@ -1,0 +1,29 @@
+/**
+	This is a sample stylesheet that can be used with the option "show images" set to "always".
+	To use this style just manually add it to your template.
+*/
+
+.anobiiwidget-list li{
+	list-style: none;
+	float: left;
+	padding: 2px;
+}
+
+.anobiiwidget-bookcover{
+	height: 150px;
+	width: 100px;
+	position: relative;
+}
+
+.anobiiwidget-bookcover a{
+	position:  absolute;
+	bottom: 0;
+}
+
+.anobiiwidget-bookcover img{
+	width: 100px;
+}
+
+.anobiiwidget-title{
+	display: none;
+}
