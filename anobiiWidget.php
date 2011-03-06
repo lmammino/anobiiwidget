@@ -220,7 +220,7 @@ class AnobiiWidget extends WP_Widget
                              (!isset($instance['useJavascript']) && self::$USE_JAVASCRIPT_DEFAULT) ): ?>
                             checked="checked"
                        <?php endif; ?> />
-            <label for="<?php echo $this->get_field_id('useJavascript'); ?>"><?php _e("Use Javascript (Highly recommended)") ?></label>
+            <label for="<?php echo $this->get_field_id('useJavascript'); ?>"><?php _e("Use Javascript (recommended)") ?></label>
         </p>
             <label for="<?php echo $this->get_field_id('progressFieldSet'); ?>"><?php _e("Book types:") ?></label>
             <fieldset class="widefat" id="<?php echo $this->get_field_id('progressFieldSet'); ?>">
@@ -291,7 +291,7 @@ class AnobiiWidget extends WP_Widget
         
         foreach($books as $book)
         {
-            $html .= '<li><div class="anobiiwidget-book">';
+            $html .= '<li'. ( ($first === true)? ' class="first"' : '') . '><div class="anobiiwidget-book">';
             if( ($first && $options['show_images'] == 1) || $options['show_images'] == 0 )
             {
                 $html .= '<div class="anobiiwidget-bookcover"><a  href="'. $book->getUrl() .'"><img src="'. $book->cover .'" alt="'. $book->title .'" /></a></div>';
