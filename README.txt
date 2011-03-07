@@ -25,7 +25,13 @@ Current version: 0.0.1
   * Uses AJAX to avoid slowing down the whole website
   * Choice books with particoular status ( Finished, Not Started, Reading, Unfinished, Reference, Abandoned)
   * Configurable cache (via transient)
-  * Multilanguage (Currently available in English and Italian)
+  * Multilanguage
+
+<h2>Translations</h2>
+
+  * **English** - by Luciano Mammino
+  * **Italian** - by Luciano Mammino
+  * **Indonesian** - by Indonesia **"Tornado kick"** Pujiasih
 
 <h2>NOTICE</h2>
 
@@ -56,7 +62,8 @@ Proudly sponsored by [ORYZONE](http://oryzone.com)
   3. Go in your widget panel and place the anobii widget wherever you want
   4. Configure the widget
   5. Well done!
-  6. (Optional) Stylize your widget with some CSS. You can find inspiration in the `sampleStyle.css` file.
+  6. (Optional) Copy also the `languages` folder if you need to internationalize the plugin
+  7. (Optional) Stylize your widget with some CSS. You can find inspiration in the `sampleStyle.css` file.
 
 
 == Changelog ==
