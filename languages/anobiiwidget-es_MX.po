@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: anobiiwidget\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-03-06 13:25+0100\n"
-"PO-Revision-Date: 2011-03-08 00:40+0100\n"
+"PO-Revision-Date: 2011-03-08 00:51+0100\n"
 "Last-Translator: Luciano <loige@hotmail.com>\n"
 "Language-Team: Aìda <lmammino@oryzone.com>\n"
 "MIME-Version: 1.0\n"
@@ -95,7 +95,7 @@ msgstr "Mostrar imágenes:"
 
 #: ../anobiiWidget.php:250
 msgid "Use Javascript (recommended)"
-msgstr "Usa Javascrip (recomendado)"
+msgstr "Usa Javascript (recomendado)"
 
 #: ../anobiiWidget.php:252
 msgid "Book types:"
