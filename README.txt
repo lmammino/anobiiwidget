@@ -1,6 +1,6 @@
 === AnobiiWidget ===
-Contributors: Luciano Mammino (http://oryzone.com)
-Tags: anobii, widget, books
+Contributors: loige
+Tags: anobii, widget, widgets, books, social
 Requires at least: 3
 Tested up to: 3.1
 Stable tag: trunk
@@ -29,9 +29,10 @@ Current version: 0.0.1
 
 <h2>Translations</h2>
 
-  * **English** - by Luciano Mammino
-  * **Italian** - by Luciano Mammino
+  * **English** - by [Luciano Mammino](http://oryzone.com)
+  * **Italian** - by [Luciano Mammino](http://oryzone.com)
   * **Indonesian** - by Indonesia **"Tornado kick"** Pujiasih
+  * **Mexican** - by [Aìda](https://twitter.com/BBoogieBangBang)
 
 <h2>NOTICE</h2>
 
