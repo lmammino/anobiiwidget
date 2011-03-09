@@ -8,7 +8,7 @@
 Plugin Name: AnobiiWidget
 Plugin URI: http://oryzone.com/
 Description: Allows you to show what you're reading on <a href="http://www.anobii.com">Anobii.com</a>
-Version: 0.0.2
+Version: 0.0.3
 Author: Luciano Mammino
 Author URI: http://oryzone.com
 License: GPLv2
@@ -36,9 +36,17 @@ load_plugin_textdomain('anobiiwidget', false, dirname( plugin_basename(__FILE__)
 
 
 /** Constants */
-define('ANOBIIWIDGET_VERSION', '0.0.1');
+define('ANOBIIWIDGET_VERSION_KEY', 'anobiiwidget_version');
+define('ANOBIIWIDGET_VERSION', '0.0.3');
 define('ANOBIIWIDGET_APIKEY', '757b1f95970d049d12d8f96929de3439');
 define('ANOBIIWIDGET_SIGNATURE', '4c150ed68347e023f1cce1295516ff28');
+
+
+/** Checks if the plugin has been updated and calls the specific onUpdate handler */
+if (get_option(ANOBIIWIDGET_VERSION_KEY) != ANOBIIWIDGET_VERSION) {
+    AnobiiWidget::onUpdate();
+}
+
 
 /**
  * This file holds the AnobiiBook class, internally used to manage the book
@@ -464,6 +472,21 @@ class AnobiiWidget extends WP_Widget
         return $data;
     }
 
+    
+    /**
+     * Function that handles plugin update business logic
+     * @since 0.0.3
+     */
+    public static function onUpdate()
+    {
+        //quick and dirty way to force the cache clearing
+        //please suggest any better solution if you know
+        for($i=1; $i < 11; $i++)
+            delete_transient (self::getTransientName ($i));
+
+        //stores the current version
+        update_option(ANOBIIWIDGET_VERSION_KEY, ANOBIIWIDGET_VERSION);
+    }
 }
 
 
@@ -482,7 +505,7 @@ function anobiiwidget_ajax_get_content()
 
 /* attach the ajax handler function */
 add_action("wp_ajax_anobiiwidget_get_content", "anobiiwidget_ajax_get_content");
-add_action("wp_ajax_no_priv_anobiiwidget_get_content", "anobiiwidget_ajax_get_content");
+add_action("wp_ajax_nopriv_anobiiwidget_get_content", "anobiiwidget_ajax_get_content");
 
 /* attach the function that registers the widget */
 add_action('widgets_init', "AnobiiWidget::register");
