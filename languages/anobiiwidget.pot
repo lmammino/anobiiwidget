@@ -1,0 +1,105 @@
+# Copyright (C) 2010 
+# This file is distributed under the same license as the  package.
+msgid ""
+msgstr ""
+"Project-Id-Version:  \n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/anobiiwidget\n"
+"POT-Creation-Date: 2011-03-10 18:02:19+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2010-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: anobiiWidget.php:116
+msgid "Finished"
+msgstr ""
+
+#: anobiiWidget.php:117
+msgid "Not Started"
+msgstr ""
+
+#: anobiiWidget.php:118
+msgid "Reading"
+msgstr ""
+
+#: anobiiWidget.php:119
+msgid "Unfinished"
+msgstr ""
+
+#: anobiiWidget.php:120
+msgid "Reference"
+msgstr ""
+
+#: anobiiWidget.php:121
+msgid "Abandoned"
+msgstr ""
+
+#: anobiiWidget.php:124
+msgid "One day"
+msgstr ""
+
+#: anobiiWidget.php:125
+msgid "3 days"
+msgstr ""
+
+#: anobiiWidget.php:126
+msgid "A week"
+msgstr ""
+
+#: anobiiWidget.php:127
+msgid "A month"
+msgstr ""
+
+#: anobiiWidget.php:130
+msgid "Always"
+msgstr ""
+
+#: anobiiWidget.php:131
+msgid "Only on the first element"
+msgstr ""
+
+#: anobiiWidget.php:132
+msgid "Never"
+msgstr ""
+
+#: anobiiWidget.php:137
+msgid "Shows your books on Anobii.com"
+msgstr ""
+
+#: anobiiWidget.php:218
+msgid "Title:"
+msgstr ""
+
+#: anobiiWidget.php:222
+msgid "Username:"
+msgstr ""
+
+#: anobiiWidget.php:233
+msgid "Add profile link"
+msgstr ""
+
+#: anobiiWidget.php:236
+msgid "Items:"
+msgstr ""
+
+#: anobiiWidget.php:249
+msgid "Show images:"
+msgstr ""
+
+#: anobiiWidget.php:268
+msgid "Use Javascript (recommended)"
+msgstr ""
+
+#: anobiiWidget.php:270
+msgid "Book types:"
+msgstr ""
+
+#: anobiiWidget.php:283
+msgid "Cache duration:"
+msgstr ""
+
+#: anobiiWidget.php:346
+msgid "There are no books to show"
+msgstr ""

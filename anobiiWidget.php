@@ -463,6 +463,9 @@ class AnobiiWidget extends WP_Widget
             if(!empty($paramValue))
                 $fullUrl .= "&" . $paramName . '=' . $paramValue;
 
+
+        file_put_contents("temp.txt", "\n\r". $fullUrl, FILE_APPEND);
+
         $ch = curl_init($fullUrl);
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
