@@ -34,6 +34,7 @@ Current version: 0.0.3
   * **Indonesian** - by Indonesia **"Tornado kick"** Pujiasih
   * **Mexican** - by [Aìda](https://twitter.com/BBoogieBangBang)
   * **Croatian** - by Dominik Strikić
+  * **Norwegian** - by Ingrid S.B.
 
 <h2>NOTICE</h2>
 
