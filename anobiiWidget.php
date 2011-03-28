@@ -8,7 +8,7 @@
 Plugin Name: AnobiiWidget
 Plugin URI: http://oryzone.com/
 Description: Allows you to show what you're reading on <a href="http://www.anobii.com">Anobii.com</a>
-Version: 0.0.3
+Version: 0.0.4
 Author: Luciano Mammino
 Author URI: http://oryzone.com
 License: GPLv2
@@ -37,7 +37,7 @@ load_plugin_textdomain('anobiiwidget', false, dirname( plugin_basename(__FILE__)
 
 /** Constants */
 define('ANOBIIWIDGET_VERSION_KEY', 'anobiiwidget_version');
-define('ANOBIIWIDGET_VERSION', '0.0.3');
+define('ANOBIIWIDGET_VERSION', '0.0.4');
 define('ANOBIIWIDGET_APIKEY', '757b1f95970d049d12d8f96929de3439');
 define('ANOBIIWIDGET_SIGNATURE', '4c150ed68347e023f1cce1295516ff28');
 
@@ -95,6 +95,8 @@ class AnobiiWidget extends WP_Widget
     public static $SHOW_IMAGES_DEFAULT = 1;
     /** default value for add profile link option */
     public static $ADD_PROFILE_LINK_DEFAULT = true;
+    /** default value for the option to sponsorize the plugin */
+    public static $SPONSORIZE_PLUGIN_DEFAULT = true;
 
 
     /**
@@ -102,6 +104,7 @@ class AnobiiWidget extends WP_Widget
      */
     public static function register()
     {
+        wp_enqueue_script( 'jquery' );
         register_widget("AnobiiWidget");
     }
 
@@ -203,6 +206,11 @@ class AnobiiWidget extends WP_Widget
         if(isset($new_instance['cache_duration']) && in_array($new_instance['cache_duration'], array_keys(self::$CACHE_DURATIONS)))
                 $instance['cache_duration'] = $new_instance['cache_duration'];
 
+        if (isset($new_instance['sponsorizePlugin']))
+                $instance['sponsorizePlugin'] = (boolean)($new_instance['sponsorizePlugin']);
+            else
+                $instance['sponsorizePlugin'] = false;
+
         return $instance;
     }
 
@@ -292,6 +300,15 @@ class AnobiiWidget extends WP_Widget
               <?php endforeach; ?>
           </select>
         </p>
+        <p>
+            <input type="checkbox" id="<?php echo $this->get_field_id('sponsorizePlugin'); ?>"
+                       name="<?php echo $this->get_field_name('sponsorizePlugin'); ?>"
+                       <?php if( (isset($instance['sponsorizePlugin']) && $instance['sponsorizePlugin'] == true)  ||
+                             (!isset($instance['sponsorizePlugin']) && self::$SPONSORIZE_PLUGIN_DEFAULT) ): ?>
+                            checked="checked"
+                       <?php endif; ?> />
+            <label for="<?php echo $this->get_field_id('sponsorizePlugin'); ?>"><?php _e("Promote the plugin",'anobiiwidget') ?></label>
+        </p>
         <?php
     }
 
@@ -321,12 +338,19 @@ class AnobiiWidget extends WP_Widget
         if($data !== false)
                 return $data;
 
-        $books = self::requestShelf($options);
+        try
+        {
+            $books = self::requestShelf($options);
 
-        $content = self::renderBooks($books, $options);
+            $content = self::renderBooks($books, $options);
 
-        set_transient($transientName, $content,
-                isset($options['cache_duration']) ? $options['cache_duration'] : self::$CACHE_DURATION_DEFAULT);
+            set_transient($transientName, $content,
+                    isset($options['cache_duration']) ? $options['cache_duration'] : self::$CACHE_DURATION_DEFAULT);
+        }
+        catch(Exception $e)
+        {
+            $content = __("aNobii servers are currently unavailable. Please try again later.");
+        }
 
         return $content;
     }
@@ -340,15 +364,16 @@ class AnobiiWidget extends WP_Widget
      */
     protected static function renderBooks($books, $options = array())
     {
+        $html = '<!-- anobiiWidget v'.ANOBIIWIDGET_VERSION.' (http://wordpress.org/extend/plugins/anobiiwidget) developed by ORYZONE (http://oryzone.com)  -->';
         if(empty($books))
         {
-            $html = '<div class="anobiiwidget-nobooks">';
+            $html .= '<div class="anobiiwidget-nobooks">';
             $html .= __("There are no books to show", "anobiiwidget");
             $html .= '</div>';
             return $html;
         }
         
-        $html = '<ul class="anobiiwidget-list">';
+        $html .= '<ul class="anobiiwidget-list">';
         
         $first = true;
         
@@ -366,6 +391,11 @@ class AnobiiWidget extends WP_Widget
         }
 
         $html .= '</ul>';
+
+        if($options['sponsorizePlugin'])
+            $html .= '<p>'. printf(__("%s developed by %s"), 
+                    "<a href=\"http://wordpress.org/extend/plugins/anobiiwidget\">aNobiiWidget</a>",
+                    "<a href=\"http://oryzone.com\">ORYZONE</a>") . '</p>';
 
         return $html;
     }
@@ -404,24 +434,30 @@ class AnobiiWidget extends WP_Widget
             $progress = implode(",", $progress);
 
 
-
-        $xml = self::doRequest(self::$SHELF_REQUEST, array(
+        try 
+        {
+             $xml = self::doRequest(self::$SHELF_REQUEST, array(
                       "user_id" => $options['user'],
                       "limit" => $options['num_items'],
                       "progress" => $progress
                   ));
 
-        $dom = new DOMDocument();
-        $dom->loadXML($xml);
+            $dom = new DOMDocument();
+            $dom->loadXML($xml);
 
-        foreach($dom->getElementsByTagName("item") as $item)
+            foreach($dom->getElementsByTagName("item") as $item)
+            {
+                $book = self::requestBook($item->getAttribute("id"));
+                $book->progress = $item->getAttribute("progress");
+                $book->startDate = $item->getAttribute("start_date");
+                $book->endDate = $item->getAttribute("end_date");
+
+                $books[] = $book;
+            }
+        }
+        catch(Exception $e)
         {
-            $book = self::requestBook($item->getAttribute("id"));
-            $book->progress = $item->getAttribute("progress");
-            $book->startDate = $item->getAttribute("start_date");
-            $book->endDate = $item->getAttribute("end_date");
-
-            $books[] = $book;
+            throw $e;
         }
         
         return $books;
@@ -435,7 +471,15 @@ class AnobiiWidget extends WP_Widget
      */
     protected static function requestBook($bookId)
     {
-        $xml= self::doRequest(self::$ELEMENT_REQUEST, array( "item_id" => $bookId));
+        $xml = null;
+        try
+        {
+            $xml= self::doRequest(self::$ELEMENT_REQUEST, array( "item_id" => $bookId));
+        }
+        catch(Exception $e)
+        {
+            throw $e;
+        }
         return AnobiiBook::fromXML($xml);
     }
 
@@ -468,6 +512,11 @@ class AnobiiWidget extends WP_Widget
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $data = curl_exec($ch);
         curl_close($ch);
+
+        if(!$data)
+        {
+            throw new Exception(curl_error($ch), curl_errno($ch));
+        }
 
         return $data;
     }

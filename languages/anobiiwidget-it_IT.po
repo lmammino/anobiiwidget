@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: anobiiwidget\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-06 13:25+0100\n"
-"PO-Revision-Date: 2011-03-06 13:25+0100\n"
+"POT-Creation-Date: 2011-03-28 02:12+0100\n"
+"PO-Revision-Date: 2011-03-28 02:19+0100\n"
 "Last-Translator: Luciano <loige@hotmail.com>\n"
 "Language-Team: Luciano Mammino <lmammino@oryzone.com>\n"
 "MIME-Version: 1.0\n"
@@ -17,95 +17,108 @@ msgstr ""
 "X-Poedit-SearchPath-0: ./..\n"
 "X-Poedit-SearchPath-1: ..\n"
 
-#: ../anobiiWidget.php:98
+#: ../anobiiWidget.php:119
 msgid "Finished"
 msgstr "Finiti"
 
-#: ../anobiiWidget.php:99
+#: ../anobiiWidget.php:120
 msgid "Not Started"
 msgstr "Non iniziati"
 
-#: ../anobiiWidget.php:100
+#: ../anobiiWidget.php:121
 msgid "Reading"
 msgstr "In lettura"
 
-#: ../anobiiWidget.php:101
+#: ../anobiiWidget.php:122
 msgid "Unfinished"
 msgstr "Non finiti"
 
-#: ../anobiiWidget.php:102
+#: ../anobiiWidget.php:123
 msgid "Reference"
 msgstr "Da consultare"
 
-#: ../anobiiWidget.php:103
+#: ../anobiiWidget.php:124
 msgid "Abandoned"
 msgstr "Abbandonati"
 
-#: ../anobiiWidget.php:106
+#: ../anobiiWidget.php:127
 msgid "One day"
 msgstr "Un giorno"
 
-#: ../anobiiWidget.php:107
+#: ../anobiiWidget.php:128
 msgid "3 days"
 msgstr "3 giorni"
 
-#: ../anobiiWidget.php:108
+#: ../anobiiWidget.php:129
 msgid "A week"
 msgstr "Una settimana"
 
-#: ../anobiiWidget.php:109
+#: ../anobiiWidget.php:130
 msgid "A month"
 msgstr "Un mese"
 
-#: ../anobiiWidget.php:112
+#: ../anobiiWidget.php:133
 msgid "Always"
 msgstr "Sempre"
 
-#: ../anobiiWidget.php:113
+#: ../anobiiWidget.php:134
 msgid "Only on the first element"
 msgstr "Solo per il primo elemento"
 
-#: ../anobiiWidget.php:114
+#: ../anobiiWidget.php:135
 msgid "Never"
 msgstr "Mai"
 
-#: ../anobiiWidget.php:119
+#: ../anobiiWidget.php:140
 msgid "Shows your books on Anobii.com"
 msgstr "Mostra i tuoi libri su Anobii.com"
 
-#: ../anobiiWidget.php:200
+#: ../anobiiWidget.php:226
 msgid "Title:"
 msgstr "Titolo:"
 
-#: ../anobiiWidget.php:204
+#: ../anobiiWidget.php:230
 msgid "Username:"
 msgstr "Nome utente:"
 
-#: ../anobiiWidget.php:215
+#: ../anobiiWidget.php:241
 msgid "Add profile link"
 msgstr "Aggiungi link al profilo"
 
-#: ../anobiiWidget.php:218
+#: ../anobiiWidget.php:244
 msgid "Items:"
 msgstr "Elementi:"
 
-#: ../anobiiWidget.php:231
+#: ../anobiiWidget.php:257
 msgid "Show images:"
 msgstr "Mostra immagini:"
 
-#: ../anobiiWidget.php:250
+#: ../anobiiWidget.php:276
 msgid "Use Javascript (recommended)"
 msgstr "Utilizza Javascript (raccomandato)"
 
-#: ../anobiiWidget.php:252
+#: ../anobiiWidget.php:278
 msgid "Book types:"
 msgstr "Tipi di libro:"
 
-#: ../anobiiWidget.php:265
+#: ../anobiiWidget.php:291
 msgid "Cache duration:"
 msgstr "Durata cache:"
 
-#: ../anobiiWidget.php:324
+#: ../anobiiWidget.php:310
+msgid "Promote the plugin"
+msgstr "Promuovi il plugin"
+
+#: ../anobiiWidget.php:352
+msgid "aNobii servers are currently unavailable. Please try again later."
+msgstr "I server aNobii sono attualmente offline. Riprova più tardi."
+
+#: ../anobiiWidget.php:371
 msgid "There are no books to show"
 msgstr "Non ci sono libri da mostrare"
+
+#: ../anobiiWidget.php:396
+#, php-format
+msgid "%s developed by %s"
+msgstr "%s sviluppato da %s"
 
