@@ -8,7 +8,7 @@
 Plugin Name: AnobiiWidget
 Plugin URI: http://oryzone.com/
 Description: Allows you to show what you're reading on <a href="http://www.anobii.com">Anobii.com</a>
-Version: 0.0.4
+Version: 0.0.5
 Author: Luciano Mammino
 Author URI: http://oryzone.com
 License: GPLv2
@@ -37,7 +37,7 @@ load_plugin_textdomain('anobiiwidget', false, dirname( plugin_basename(__FILE__)
 
 /** Constants */
 define('ANOBIIWIDGET_VERSION_KEY', 'anobiiwidget_version');
-define('ANOBIIWIDGET_VERSION', '0.0.4');
+define('ANOBIIWIDGET_VERSION', '0.0.5');
 define('ANOBIIWIDGET_APIKEY', '757b1f95970d049d12d8f96929de3439');
 define('ANOBIIWIDGET_SIGNATURE', '4c150ed68347e023f1cce1295516ff28');
 
@@ -393,7 +393,7 @@ class AnobiiWidget extends WP_Widget
         $html .= '</ul>';
 
         if($options['sponsorizePlugin'])
-            $html .= '<p>'. printf(__("%s developed by %s"), 
+            $html .= '<p>'. sprintf(__("%s developed by %s"),
                     "<a href=\"http://wordpress.org/extend/plugins/anobiiwidget\">aNobiiWidget</a>",
                     "<a href=\"http://oryzone.com\">ORYZONE</a>") . '</p>';
 
@@ -528,13 +528,36 @@ class AnobiiWidget extends WP_Widget
      */
     public static function onUpdate()
     {
+        self::clearTransient();
+
+        //stores the current version
+        update_option(ANOBIIWIDGET_VERSION_KEY, ANOBIIWIDGET_VERSION);
+    }
+
+
+    /**
+     * Function that removes all stored preferences and cache when uninstalling
+     * the plugin
+     * @since 0.0.5
+     */
+    public static function onUninstall()
+    {
+        delete_option(ANOBIIWIDGET_VERSION_KEY);
+        delete_option('widget_anobiiwidget');
+        self::clearTransient();
+    }
+
+
+    /**
+     * Function that removes all the transient data created by the plugin
+     * @since 0.0.5
+     */
+    protected static function clearTransient()
+    {
         //quick and dirty way to force the cache clearing
         //please suggest any better solution if you know
         for($i=1; $i < 11; $i++)
             delete_transient (self::getTransientName ($i));
-
-        //stores the current version
-        update_option(ANOBIIWIDGET_VERSION_KEY, ANOBIIWIDGET_VERSION);
     }
 }
 
@@ -558,5 +581,8 @@ add_action("wp_ajax_nopriv_anobiiwidget_get_content", "anobiiwidget_ajax_get_con
 
 /* attach the function that registers the widget */
 add_action('widgets_init', "AnobiiWidget::register");
+
+/* attach the uninstal hook */
+register_uninstall_hook(__FILE__, "AnobiiWidget::onUninstall");
 
 ?>
