@@ -126,7 +126,9 @@ class AnobiiBook
     public static function fromXML($xml)
     {
         $book = new AnobiiBook();
-
+        
+        $xml = str_replace("& ", "&amp; ", $xml);
+        
         $dom = new DOMDocument();
         $dom->loadXML($xml);
 

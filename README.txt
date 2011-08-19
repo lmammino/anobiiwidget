@@ -35,6 +35,7 @@ Current version: 0.0.5
   * **Mexican** - by [Aìda](https://twitter.com/BBoogieBangBang)
   * **Croatian** - by Dominik Strikić
   * **Norsk** - by Ingrid S.B.
+  * **Portughese** - by Dinis Correia
 
 <h2>NOTICE</h2>
 
