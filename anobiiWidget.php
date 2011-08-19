@@ -8,7 +8,7 @@
 Plugin Name: AnobiiWidget
 Plugin URI: http://oryzone.com/
 Description: Allows you to show what you're reading on <a href="http://www.anobii.com">Anobii.com</a>
-Version: 0.0.5
+Version: 0.0.6
 Author: Luciano Mammino
 Author URI: http://oryzone.com
 License: GPLv2
@@ -37,7 +37,7 @@ load_plugin_textdomain('anobiiwidget', false, dirname( plugin_basename(__FILE__)
 
 /** Constants */
 define('ANOBIIWIDGET_VERSION_KEY', 'anobiiwidget_version');
-define('ANOBIIWIDGET_VERSION', '0.0.5');
+define('ANOBIIWIDGET_VERSION', '0.0.6');
 define('ANOBIIWIDGET_APIKEY', '757b1f95970d049d12d8f96929de3439');
 define('ANOBIIWIDGET_SIGNATURE', '4c150ed68347e023f1cce1295516ff28');
 
