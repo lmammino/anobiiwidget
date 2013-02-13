@@ -15,7 +15,7 @@ The service allows individuals to catalogue their books and rate, review and dis
 
 This is a Wordpress plugin that adds a widget to display your books from your [Anobii](http://www.anobii.com) account.
 Currently tested only with Wordpress 3.0 and 3.1. It is still in beta, so don't hesitate to commit bugs or suggest improvements.
-Current version: 0.0.6
+Current version: 0.0.7
 
 <h2>Features</h2>
 
@@ -36,6 +36,7 @@ Current version: 0.0.6
   * **Croatian** - by Dominik Strikić
   * **Norsk** - by Ingrid S.B.
   * **Portughese** - by Dinis Correia
+  * **Slovak** - by [Branco](http://webhostinggeeks.com/user-reviews/)
 
 <h2>NOTICE</h2>
 
@@ -71,6 +72,9 @@ Proudly sponsored by [ORYZONE](http://oryzone.com)
 
 
 == Changelog ==
+
+= 0.0.7 =
+  * Added Slovak translation
 
 = 0.0.6 =
   * Added Portughese translation
